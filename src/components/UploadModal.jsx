@@ -7,6 +7,7 @@ export default function UploadModal({ isOpen, onClose }) {
     const [file, setFile] = useState(null);
     const [submitted, setSubmitted] = useState(false);
     const [uploading, setUploading] = useState(false);
+    const fileInputRef = React.useRef(null);
     const [formData, setFormData] = useState({
         subject: '',
         grade: 'Grade 6-9',
@@ -34,6 +35,10 @@ export default function UploadModal({ isOpen, onClose }) {
         if (e.dataTransfer.files && e.dataTransfer.files[0]) {
             setFile(e.dataTransfer.files[0]);
         }
+    };
+
+    const handleAreaClick = () => {
+        fileInputRef.current?.click();
     };
 
     const handleSubmit = async (e) => {
@@ -158,8 +163,8 @@ export default function UploadModal({ isOpen, onClose }) {
                                 />
                             </div>
 
-                            <div className="flex" style={{ gap: '1rem', marginBottom: '1rem' }}>
-                                <div style={{ flex: '1 1 0%', minWidth: 0 }}>
+                            <div className="form-row">
+                                <div className="form-col">
                                     <label className="form-label">Type</label>
                                     <select
                                         className="form-select"
@@ -172,7 +177,7 @@ export default function UploadModal({ isOpen, onClose }) {
                                         <option>Model Paper</option>
                                     </select>
                                 </div>
-                                <div style={{ flex: '1 1 0%', minWidth: 0 }}>
+                                <div className="form-col">
                                     <label className="form-label">Grade</label>
                                     <select
                                         className="form-select"
@@ -185,7 +190,7 @@ export default function UploadModal({ isOpen, onClose }) {
                                         <option>Grade 12-13 (A/L)</option>
                                     </select>
                                 </div>
-                                <div style={{ flex: '1 1 0%', minWidth: 0 }}>
+                                <div className="form-col">
                                     <label className="form-label">Medium</label>
                                     <select
                                         className="form-select"
@@ -219,6 +224,7 @@ export default function UploadModal({ isOpen, onClose }) {
                                     onDragLeave={handleDrag}
                                     onDragOver={handleDrag}
                                     onDrop={handleDrop}
+                                    onClick={handleAreaClick}
                                 >
                                     {file ? (
                                         <div className="flex items-center justify-center gap-2 text-primary">
@@ -243,7 +249,13 @@ export default function UploadModal({ isOpen, onClose }) {
                                             <p style={{ fontSize: '0.75rem', color: '#9ca3af' }}>Supported: PDF, JPG, PNG. Max 10MB.</p>
                                         </>
                                     )}
-                                    <input type="file" className="hidden" style={{ display: 'none' }} onChange={(e) => setFile(e.target.files[0])} />
+                                    <input 
+                                        type="file" 
+                                        className="hidden" 
+                                        style={{ display: 'none' }} 
+                                        onChange={(e) => setFile(e.target.files[0])} 
+                                        ref={fileInputRef}
+                                    />
                                 </div>
                             </div>
 

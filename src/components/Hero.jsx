@@ -24,7 +24,7 @@ export default function Hero({ onSearch, onFilterMedium, totalDownloads = 0 }) {
                 </h1>
                 
                 <p>
-                    Access thousands of free study materials shared by students across Sri Lanka. 
+                    Access free study materials shared by students across Sri Lanka. 
                     Notes, past papers, and more — all in one place.
                 </p>
                 

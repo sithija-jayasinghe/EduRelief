@@ -75,7 +75,7 @@ function Home() {
     <main className="min-h-screen">
       <Hero onSearch={setSearchQuery} onFilterMedium={setMediumFilter} totalDownloads={totalDownloads} />
       <div className="container py-16">
-        <div className="flex items-center justify-between mb-10">
+        <div className="flex flex-col md:flex-row items-start md:items-center justify-between mb-10 gap-4">
           <div>
             <h2 className="text-3xl mb-2">
               {searchQuery ? `Search Results for "${searchQuery}"` : 'Recent Uploads'}
@@ -85,7 +85,7 @@ function Home() {
             </p>
           </div>
           {!searchQuery && !showAll && notes.length > 6 && (
-            <button onClick={() => setShowAll(true)} className="text-primary font-semibold hover:underline">
+            <button onClick={() => setShowAll(true)} className="text-primary font-semibold hover:underline self-start md:self-auto">
               View All →
             </button>
           )}

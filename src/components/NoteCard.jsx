@@ -11,14 +11,15 @@ export default function NoteCard({ id, title, subject, grade, author, size, down
         window.open(fileUrl, '_blank');
         
         // Update local state immediately for UI feedback
-        setDownloadCount(prev => prev + 1);
+        const newCount = downloadCount + 1;
+        setDownloadCount(newCount);
 
         // Update download count in database
         if (id) {
             try {
                 await supabase
                     .from('notes')
-                    .update({ downloads: (downloads || 0) + 1 })
+                    .update({ downloads: newCount })
                     .eq('id', id);
                 
                 // Notify parent to update total counts
