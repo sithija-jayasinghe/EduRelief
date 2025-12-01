@@ -1,0 +1,76 @@
+import React from 'react';
+import { FileText, Download, Eye, File, BookOpen } from 'lucide-react';
+import { supabase } from '../lib/supabase';
+
+export default function NoteCard({ id, title, subject, grade, author, size, downloads, type, fileUrl }) {
+    
+    const handleDownload = async () => {
+        // Open file in new tab (triggers download for PDFs)
+        window.open(fileUrl, '_blank');
+        
+        // Update download count in database
+        if (id) {
+            try {
+                await supabase
+                    .from('notes')
+                    .update({ downloads: (downloads || 0) + 1 })
+                    .eq('id', id);
+            } catch (error) {
+                console.error('Error updating download count:', error);
+            }
+        }
+    };
+
+    const handlePreview = () => {
+        // Open file in new tab for preview
+        window.open(fileUrl, '_blank');
+    };
+
+    // Choose icon based on type
+    const getIcon = () => {
+        switch(type?.toLowerCase()) {
+            case 'past paper':
+                return <File size={24} strokeWidth={1.5} />;
+            case 'note':
+                return <BookOpen size={24} strokeWidth={1.5} />;
+            default:
+                return <FileText size={24} strokeWidth={1.5} />;
+        }
+    };
+
+    return (
+        <div className="note-card">
+            <div className="card-header">
+                <div className="file-icon">
+                    {getIcon()}
+                </div>
+                <div className="card-content">
+                    <div className="card-tags">
+                        <span className="tag tag-grade">{grade}</span>
+                        <span className="tag tag-subject">{subject}</span>
+                        {type && <span className="tag tag-type">{type}</span>}
+                    </div>
+                    <h3 className="card-title">{title}</h3>
+                    <p className="card-author">By {author}</p>
+                </div>
+            </div>
+
+            <div className="card-footer">
+                <div className="file-size">
+                    <span className="file-size-label">Size</span>
+                    <span className="file-size-value">{size}</span>
+                </div>
+
+                <div className="card-actions">
+                    <button className="btn-icon" title="Preview" onClick={handlePreview}>
+                        <Eye size={18} />
+                    </button>
+                    <button className="btn-primary btn-sm" title="Download" onClick={handleDownload}>
+                        <Download size={16} />
+                        <span>Download</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    );
+}
