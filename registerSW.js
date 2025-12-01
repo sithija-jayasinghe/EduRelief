@@ -1,1 +1,1 @@
-if('serviceWorker' in navigator) {window.addEventListener('load', () => {navigator.serviceWorker.register('/EduRelief/sw.js', { scope: '/EduRelief/' })})}
+if('serviceWorker' in navigator) {window.addEventListener('load', () => {navigator.serviceWorker.register('/BrightMindAid/sw.js', { scope: '/BrightMindAid/' })})}
