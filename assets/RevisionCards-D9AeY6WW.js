@@ -1,4 +1,4 @@
-import{j as e}from"./index-c2gAWx5i.js";import{r as o}from"./router-DmZmTQD2.js";import{L as w,v as L,w as m,x as H,h as C,y as k,t as M,z as R}from"./icons-C3RlEb-g.js";import"./react-vendor-ZjeaK7N3.js";import"./supabase-C8HnRnw-.js";const p={Mathematics:{"O/L":[{id:1,title:"Quadratic Formula",content:"x = (-b ± √(b² - 4ac)) / 2a",category:"Algebra"},{id:2,title:"Pythagoras Theorem",content:`a² + b² = c²
+import{j as e}from"./index-CTmt-P1O.js";import{r as o}from"./router-DmZmTQD2.js";import{L as w,v as L,w as m,x as H,h as C,y as k,t as M,z as R}from"./icons-C3RlEb-g.js";import"./react-vendor-ZjeaK7N3.js";import"./supabase-C8HnRnw-.js";const p={Mathematics:{"O/L":[{id:1,title:"Quadratic Formula",content:"x = (-b ± √(b² - 4ac)) / 2a",category:"Algebra"},{id:2,title:"Pythagoras Theorem",content:`a² + b² = c²
 
 In a right triangle, the square of hypotenuse equals sum of squares of other two sides`,category:"Geometry"},{id:3,title:"Area Formulas",content:`• Circle: πr²
 • Triangle: ½ × base × height
