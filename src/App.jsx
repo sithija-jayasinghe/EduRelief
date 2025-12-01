@@ -17,6 +17,41 @@ function Home() {
 
   useEffect(() => {
     fetchDownloads();
+
+    // Subscribe to realtime changes on the notes table
+    const channel = supabase
+      .channel('downloads-changes')
+      .on(
+        'postgres_changes',
+        {
+          event: 'UPDATE',
+          schema: 'public',
+          table: 'notes'
+        },
+        () => {
+          // Refetch downloads when any note is updated
+          fetchDownloads();
+        }
+      )
+      .on(
+        'postgres_changes',
+        {
+          event: 'INSERT',
+          schema: 'public',
+          table: 'notes'
+        },
+        () => {
+          // Refetch when new notes are added
+          fetchDownloads();
+          fetchNotes();
+        }
+      )
+      .subscribe();
+
+    // Cleanup subscription on unmount
+    return () => {
+      supabase.removeChannel(channel);
+    };
   }, []);
 
   useEffect(() => {
@@ -27,7 +62,7 @@ function Home() {
     return () => clearTimeout(timer);
   }, [searchQuery, mediumFilter]);
 
-  
+
   const fetchDownloads = async () => {
     try {
       const { data, error } = await supabase
