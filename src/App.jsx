@@ -27,6 +27,7 @@ function Home() {
     return () => clearTimeout(timer);
   }, [searchQuery, mediumFilter]);
 
+  
   const fetchDownloads = async () => {
     try {
       const { data, error } = await supabase
