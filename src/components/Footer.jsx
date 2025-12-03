@@ -94,7 +94,7 @@ export default function Footer() {
                     <p className="footer-copyright">
                         © {currentYear} BrightMindAid | Developed with <Heart size={14} className="heart-icon" /> by{' '}
                         <a 
-                            href="https://www.linkedin.com/in/sithija-jayasinghe/" 
+                            href="https://www.linkedin.com/in/sithija-harshana-jayasinghe-552822340/" 
                             target="_blank" 
                             rel="noopener noreferrer"
                             className="developer-link"

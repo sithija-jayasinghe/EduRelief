@@ -59,8 +59,9 @@ function Home() {
           table: 'notes'
         },
         () => {
-          // Refetch downloads when any note is updated
+          // Refetch downloads and notes when any note is updated
           fetchDownloads();
+          fetchNotes();
         }
       )
       .on(

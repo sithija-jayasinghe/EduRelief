@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FileText, Download, Eye, File, BookOpen, Share2, Check, Calendar, Clock } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 
@@ -30,21 +30,39 @@ export default function NoteCard({
     const [downloadCount, setDownloadCount] = useState(downloads || 0);
     const [copied, setCopied] = useState(false);
     
+    // Sync download count when prop changes (from parent refetch or realtime)
+    useEffect(() => {
+        setDownloadCount(downloads || 0);
+    }, [downloads]);
+    
     const handleDownload = async () => {
         // Open file in new tab (triggers download for PDFs)
         window.open(fileUrl, '_blank');
         
         // Update local state immediately for UI feedback
-        const newCount = downloadCount + 1;
-        setDownloadCount(newCount);
+        setDownloadCount(prev => prev + 1);
 
-        // Update download count in database
+        // Update download count in database using atomic increment via RPC or raw SQL
         if (id) {
             try {
-                await supabase
-                    .from('notes')
-                    .update({ downloads: newCount })
-                    .eq('id', id);
+                // Use atomic increment to avoid race conditions
+                const { error } = await supabase.rpc('increment_download', { note_id: id });
+                
+                if (error) {
+                    // Fallback: fetch current value and update
+                    const { data: currentData } = await supabase
+                        .from('notes')
+                        .select('downloads')
+                        .eq('id', id)
+                        .single();
+                    
+                    if (currentData) {
+                        await supabase
+                            .from('notes')
+                            .update({ downloads: (currentData.downloads || 0) + 1 })
+                            .eq('id', id);
+                    }
+                }
                 
                 // Notify parent to update total counts
                 if (onDownload) onDownload();
